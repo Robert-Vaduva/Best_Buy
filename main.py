@@ -34,7 +34,7 @@ def make_an_order(store_p):
             product_nr = input("Which product number do you want (e.g. 1?)")
             if not product_nr:
                 break
-            if (any(elem.isalpha() for elem in str(product_nr)) or
+            if (any(elem.isalpha() for elem in str(product_nr)) or int(product_nr) == 0 or
                     int(product_nr) > len(store_p.list_of_products)):
                 print("Error adding product!\n")
                 continue

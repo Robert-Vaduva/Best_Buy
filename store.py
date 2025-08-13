@@ -54,6 +54,8 @@ class Store:
         for prod, quantity in shopping_list:
             if prod in self.list_of_products:
                 total_price += prod.buy(quantity)
+                if prod.get_quantity() == 0:
+                    self.remove_product(prod)
         return total_price
 
 

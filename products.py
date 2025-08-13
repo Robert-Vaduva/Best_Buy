@@ -75,7 +75,7 @@ class Product:
         if self.quantity < quantity:
             raise ValueError("The requested quantity is higher than the current stock")
 
-        self.quantity -= quantity
+        self.set_quantity(self.quantity-quantity)
         return float(self.price * quantity)
 
 
