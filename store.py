@@ -15,6 +15,7 @@ class Store:
         """Initialize store with a list of products."""
         self.list_of_products = []
         for prod in list_of_products:
+            prod.activate()
             self.add_product(prod)
 
     def add_product(self, prod):
@@ -33,7 +34,10 @@ class Store:
 
     def get_total_quantity(self):
         """Return the total number of products."""
-        return int(len(self.list_of_products))
+        total_quantity = 0
+        for prod in self.list_of_products:
+            total_quantity += prod.quantity
+        return int(total_quantity)
 
     def get_all_products(self):
         """Return a list of active products."""
