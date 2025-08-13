@@ -32,21 +32,32 @@ def make_an_order(store_p):
     while True:
         try:
             product_nr = input("Which product number do you want (e.g. 1?)")
-            if product_nr == "":
+            if not product_nr:
                 break
+            if (any(elem.isalpha() for elem in str(product_nr)) or
+                    int(product_nr) > len(store_p.list_of_products)):
+                print("Error adding product!\n")
+                continue
             quantity = int(input("What amount do you want? "))
+            if not quantity:
+                break
+            if (any(elem.isalpha() for elem in str(quantity)) or
+                    int(quantity) > store_p.list_of_products[int(product_nr) - 1].get_quantity()):
+                print("Error while making order! Quantity larger than what exists\n")
+                continue
+
             order_list.append((store_p.list_of_products[int(product_nr) - 1], quantity))
             print("Product added to list!\n")
         except (ValueError, TypeError) as error:
             print(error)
     total_payment = store_p.order(order_list)
-    print("********")
-    print(f"Order made! Total payment {total_payment}")
+    if total_payment > 0:
+        print("********")
+        print(f"Order made! Total payment {total_payment}")
 
 
 def exit_fnc(_store_p):
     """Exit the application with a goodbye message."""
-    print("\nBye!")
     sys.exit()
 
 
@@ -66,10 +77,10 @@ def start(store_p):
             print("3. Make an order")
             print("4. Quit")
             user_input = int(input("Please choose a number: "))
-            if 0 <= user_input <= len(FUNCTIONS):
+            if 0 < user_input <= len(FUNCTIONS):
                 FUNCTIONS[user_input](store_p)
-        except (ValueError, TypeError) as error:
-            print(error)
+        except (ValueError, TypeError):
+            print("Error with your choice! Try again!")
 
 
 if __name__ == "__main__":

@@ -11,12 +11,13 @@ import products
 
 class Store:
     """Store that holds and manages multiple products."""
-    def __init__(self, list_of_products):
+    def __init__(self, list_of_products=None):
         """Initialize store with a list of products."""
         self.list_of_products = []
-        for prod in list_of_products:
-            prod.activate()
-            self.add_product(prod)
+        if isinstance(list_of_products, list) and list_of_products is not None:
+            for prod in list_of_products:
+                prod.activate()
+                self.add_product(prod)
 
     def add_product(self, prod):
         """Add a Product to the store."""
@@ -62,9 +63,14 @@ if __name__ == "__main__":
 
     # instance of a store
     best_buy = Store([bose, mac])
+    Store()
+    Store({0: "0", 1: "1"})
+    Store(((0, 0), (1, 1)))
+    print(best_buy.list_of_products)
 
     pixel = products.Product("Google Pixel 7", price=500, quantity=250)
     best_buy.add_product(pixel)
+    best_buy.remove_product("google")
 
     price = best_buy.order([(bose, 5), (mac, 30), (bose, 10)])
     print(f"Order cost: {price} dollars.")
